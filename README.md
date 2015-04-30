@@ -3,6 +3,8 @@ gulp-hasher
 
 Gulp plugin that builds a cache of assets and their md5 digests
 
+[![Build Status](https://travis-ci.org/disintegrator/gulp-hasher.svg)](https://travis-ci.org/disintegrator/gulp-hasher)
+
 ## Install
 
     npm install --save-dev gulp-hasher
