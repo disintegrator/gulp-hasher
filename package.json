@@ -1,0 +1,33 @@
+{
+  "name": "gulp-hasher",
+  "version": "0.1.0",
+  "description": "Gulp plugin that builds a cache of assets and their md5 digests",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:disintegrator/gulp-hasher.git"
+  },
+  "keywords": [
+    "gulpplugin",
+    "md5",
+    "hash",
+    "assets"
+  ],
+  "author": "George Haidar <ghaidar0@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/disintegrator/gulp-hasher/issues"
+  },
+  "homepage": "https://github.com/disintegrator/gulp-hasher",
+  "dependencies": {
+    "event-stream": "^3.3.0"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "vinyl": "^0.4.6"
+  }
+}
