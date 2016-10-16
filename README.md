@@ -14,46 +14,47 @@ Gulp plugin that builds a cache of assets and their md5 digests
 Throughout your gulpfile whenever an asset is generated you will want to add it
 to the cache of hashes
 
+```javascript
+var autoprefixer = require('gulp-autoprefixer');
+var buster = require('gulp-buster');
+var gulp = require('gulp');
+var hasher = require('gulp-hasher');
+var imagemin = require('gulp-imagemin');
+var less = require('gulp-less');
+var minifyCss = require('gulp-minify-css');
+var pngquant = require('imagemin-pngquant');
+var rename = require('gulp-rename');
 
-    var autoprefixer = require('gulp-autoprefixer');
-    var buster = require('gulp-buster');
-    var gulp = require('gulp');
-    var hasher = require('gulp-hasher');
-    var imagemin = require('gulp-imagemin');
-    var less = require('gulp-less');
-    var minifyCss = require('gulp-minify-css');
-    var pngquant = require('imagemin-pngquant');
-    var rename = require('gulp-rename');
 
+// Using it in an image processing workflow looks like this:
+gulp.task('images', function() {
+  return gulp.src('assets/images/**/*')
+    .pipe(imagemin({
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest('dist/assets/images/'))
+    .pipe(hasher());     // We have output assets, hash and cache them
+});
 
-    // Using it in an image processing workflow looks like this:
-    gulp.task('images', function() {
-      return gulp.src('assets/images/**/*')
-        .pipe(imagemin({
-          progressive: true,
-          svgoPlugins: [{removeViewBox: false}],
-          use: [pngquant()]
-        }))
-        .pipe(gulp.dest('dist/assets/images/'))
-        .pipe(hasher());     // We have output assets, hash and cache them
-    });
-
-    // Using it in a css workflow looks like this:
-    gulp.task('styles', ['images'], function() {
-      return gulp.src('assets/styles/themes/*/style.less')
-        .pipe(less())
-        .pipe(autoprefixer())
-        .pipe(buster({
-          assetRoot: path.join(__dirname, 'dist'),
-          hashes: hasher.hashes
-        }))
-        .pipe(gulp.dest('dist/assets/styles/'))
-        .pipe(hasher())     // we want to hash the unminified build...
-        .pipe(minifyCss())
-        .pipe(rename({extname: '.min.css'}))
-        .pipe(gulp.dest('dist/assets/styles/'))
-        .pipe(hasher());    // ...and the minified build
-    });
+// Using it in a css workflow looks like this:
+gulp.task('styles', ['images'], function() {
+  return gulp.src('assets/styles/themes/*/style.less')
+    .pipe(less())
+    .pipe(autoprefixer())
+    .pipe(buster({
+      assetRoot: path.join(__dirname, 'dist'),
+      hashes: hasher.hashes
+    }))
+    .pipe(gulp.dest('dist/assets/styles/'))
+    .pipe(hasher())     // we want to hash the unminified build...
+    .pipe(minifyCss())
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest('dist/assets/styles/'))
+    .pipe(hasher());    // ...and the minified build
+});
+```
 
 ## Why
 
